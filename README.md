@@ -6,7 +6,8 @@ This repository includes a REST API supporting conversion of Kognic to Open Labe
 ## Annotation Converter
 Annotation converter package includes functionality for converting Kognic to Open Label annotation. This is done by creating a Pydantic object representation of the  JSON-schemas, allowing conversion between the respective representations.
 
-The package can be installed using pip in the root directory of the repository by entering:
+The package can be installed using pip by entering the following in the root directory of the repository:
+
 ```
 pip install .
 ```
@@ -404,7 +405,7 @@ Open Label JSON-schema presented as a model representation using Pydantic.
 The API is implemented using *FastAPI* with *Uvicorn*.
 
 ### Starting the API
-The API can be started using the following command in the root directory of the repository by entering:
+The API can be started using the following command in the root directory of the repository:
 
 ```
 uvicorn main:app
