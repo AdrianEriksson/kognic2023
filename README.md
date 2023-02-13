@@ -1,16 +1,17 @@
 # Kognic Coding Assignment
 
 ## Overview
-This repository includes a REST API supporting conversion of Kognic to Open Label annotations schemas. 
-
-
+This repository includes a REST API supporting conversion of Kognic to Open Label annotations schemas, utilizing *FastAPI* and custom package *annotation_converter*.
 
 ## Annotation Converter
+Annotation converter package includes functionality for converting Kognic to Open Label annotation. This is done by creating a Pydantic object representation of the  JSON-schemas, allowing conversion between the respective representations.
 
+The package can be installed using pip in the root directory of the repository by entering:
+```
+pip install .
 ```
 
-```
-
+Kognic JSON-schema presented as a model representation using Pydantic.
 ```json
 {
   "title": "KognicAnnotation",
@@ -205,6 +206,7 @@ This repository includes a REST API supporting conversion of Kognic to Open Labe
 }
 ```
 
+Open Label JSON-schema presented as a model representation using Pydantic.
 ```json
 {
   "title": "OpenLabelAnnotation",
@@ -399,6 +401,23 @@ This repository includes a REST API supporting conversion of Kognic to Open Labe
 ```
 
 ## API
+The API is implemented using *FastAPI* with *Uvicorn*.
+
 ### Starting the API
+The API can be started using the following command in the root directory of the repository by entering:
+
+```
+uvicorn main:app
+```
+
+Note: Use "--reload" as additional parameter to enable automatic reload for simple debugging purposes. 
 
 ### Using the API
+The API support GET HTTP-request with Kognic JSON annotation as payload, returning the corresponding Open Label translaton. See example CURL syntax below:
+
+```
+curl --request GET 
+     --url http://127.0.0.1:8000/convert
+     --header 'Content-Type: application/json'
+     --data @path/to/input.json
+```

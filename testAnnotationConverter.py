@@ -13,9 +13,6 @@ class AnnotationConverterTests(unittest.TestCase):
         with open('input/kognic_1.json', 'r') as kognicData:
             kognicDataDict = json.loads(kognicData.read())
             kognicObjectRepresentation = kognicFormat.KognicAnnotation(**kognicDataDict)
-
-            #print(kognicFormat.KognicAnnotation.json_schema())
-
             kognicRepresentationJson = json.dumps(kognicObjectRepresentation.dict(by_alias = True, exclude_none = True))
             self.assertEqual(kognicRepresentationJson, json.dumps(kognicDataDict))
 
@@ -30,9 +27,6 @@ class AnnotationConverterTests(unittest.TestCase):
     def test_ConvertKognicToOpenLabelFormat(self):
         ''' Validate conversion from Kognic format to Open Label format. '''
         with open('input/kognic_1.json', 'r') as kognicData, open('input/open_label_1.json', 'r') as openLabelData:
-            print(kognicFormat.KognicAnnotation.schema_json(indent = 2))
-            print(openLabelFormat.OpenLabelAnnotation.schema_json(indent = 2))
-            
             kognicDataDict = json.loads(kognicData.read())
             openLabelDataConverted = convert.convert(kognicFormat.KognicAnnotation(**kognicDataDict))
             openLabelDataDict = json.loads(openLabelData.read())

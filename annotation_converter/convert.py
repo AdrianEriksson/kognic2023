@@ -4,11 +4,15 @@ def get_bbox_from_epbb(xmax, xmin, ymax, ymin):
     ''' Converts extreme point to 2D canonical bounding box. '''
     return [.5*(xmax - xmin) + xmin, .5*(ymax - ymin) + ymin, xmax - xmin, ymax - ymin]
 
-def convert(kognicObjectRepresentation):
+def convert(kognicObjectRepresentation : kognicFormat.KognicAnnotation):
+    ''' Converts model representation of Kognic to Open Label annotation as dictionary. '''
+    
+    # Prepare empty dicts for later processing.
+    # "in"-prefix denotes temporary object for creation of Open Label annotation.
     inObjects = {}
     inFrameObjects = {}
     inFrames = {}
-
+    
     featureDict = {feature.id : feature for feature in kognicObjectRepresentation.shapes.cam.features}
 
     for key, shapeProperty in kognicObjectRepresentation.shapeProperties.items():
@@ -36,7 +40,7 @@ def convert(kognicObjectRepresentation):
         if shapeProperty.all.objectType is not None:
             inText = openLabelFormat.Text(name = 'ObjectType', val = shapeProperty.all.objectType)
             inObjectData.text = [inText]
-        
+
         inFrameObject = openLabelFormat.FrameObject(objectData = inObjectData)
         inFrameObjects[key] = inFrameObject
 
@@ -49,5 +53,4 @@ def convert(kognicObjectRepresentation):
     inData = openLabelFormat.Data(openLabel = inOpenLabel)
 
     openLabelObjectRepresentation = openLabelFormat.OpenLabelAnnotation(data = inData)
-
     return openLabelObjectRepresentation.dict(by_alias = True, exclude_none = True)
